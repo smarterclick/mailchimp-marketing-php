@@ -49,47 +49,47 @@ use MailchimpMarketing\Api\VerifiedDomainsApi;
 
 class Configuration
 {
-    private static $defaultConfiguration;
+    private static Configuration $defaultConfiguration;
 
-    protected $apiKeys = [];
-    protected $apiKeyPrefixes = [];
-    protected $accessToken = '';
-    protected $username = '';
-    protected $password = '';
-    protected $host = 'https://server.api.mailchimp.com/3.0';
-    protected $userAgent = 'Swagger-Codegen/3.0.80/php';
-    protected $debug = false;
-    protected $debugFile = 'php://output';
-    protected $tempFolderPath;
-    protected $timeout = 120;
+    protected array $apiKeys = [];
+    protected array $apiKeyPrefixes = [];
+    protected string $accessToken = '';
+    protected string $username = '';
+    protected string $password = '';
+    protected string $host = 'https://server.api.mailchimp.com/3.0';
+    protected string $userAgent = 'Swagger-Codegen/3.0.80/php';
+    protected bool $debug = false;
+    protected string $debugFile = 'php://output';
+    protected string $tempFolderPath;
+    protected int $timeout = 120;
 
-    public $accountExport;
-    public $accountExports;
-    public $activityFeed;
-    public $authorizedApps;
-    public $automations;
-    public $batchWebhooks;
-    public $batches;
-    public $campaignFolders;
-    public $campaigns;
-    public $connectedSites;
-    public $conversations;
-    public $customerJourneys;
-    public $ecommerce;
-    public $facebookAds;
-    public $fileManager;
-    public $landingPages;
-    public $lists;
-    public $ping;
-    public $reporting;
-    public $reports;
-    public $root;
-    public $searchCampaigns;
-    public $searchMembers;
-    public $Surveys;
-    public $templateFolders;
-    public $templates;
-    public $verifiedDomains;
+    public AccountExportApi $accountExport;
+    public AccountExportsApi $accountExports;
+    public ActivityFeedApi $activityFeed;
+    public AuthorizedAppsApi $authorizedApps;
+    public AutomationsApi $automations;
+    public BatchWebhooksApi $batchWebhooks;
+    public BatchesApi $batches;
+    public CampaignFoldersApi $campaignFolders;
+    public CampaignsApi $campaigns;
+    public ConnectedSitesApi $connectedSites;
+    public ConversationsApi $conversations;
+    public CustomerJourneysApi $customerJourneys;
+    public EcommerceApi $ecommerce;
+    public FacebookAdsApi $facebookAds;
+    public FileManagerApi $fileManager;
+    public LandingPagesApi $landingPages;
+    public ListsApi $lists;
+    public PingApi $ping;
+    public ReportingApi $reporting;
+    public ReportsApi $reports;
+    public RootApi $root;
+    public SearchCampaignsApi $searchCampaigns;
+    public SearchMembersApi $searchMembers;
+    public SurveysApi $Surveys;
+    public TemplateFoldersApi $templateFolders;
+    public TemplatesApi $templates;
+    public VerifiedDomainsApi $verifiedDomains;
 
     public function __construct()
     {
@@ -126,9 +126,9 @@ class Configuration
 
     public function setConfig($config = array())
     {
-        $apiKey = isset($config['apiKey']) ? $config['apiKey'] : '';
-        $accessToken = isset($config['accessToken']) ? $config['accessToken'] : '';
-        $server = isset($config['server']) ? $config['server'] : 'invalid-server';
+        $apiKey = $config['apiKey'] ?? '';
+        $accessToken = $config['accessToken'] ?? '';
+        $server = $config['server'] ?? 'invalid-server';
         $host = str_replace('server', $server, $this->getHost());
 
         // Basic Authentication
@@ -159,7 +159,7 @@ class Configuration
 
     public function getApiKey($apiKeyIdentifier)
     {
-        return isset($this->apiKeys[$apiKeyIdentifier]) ? $this->apiKeys[$apiKeyIdentifier] : null;
+        return $this->apiKeys[$apiKeyIdentifier] ?? null;
     }
 
     public function setApiKeyPrefix($apiKeyIdentifier, $prefix)
@@ -170,7 +170,7 @@ class Configuration
 
     public function getApiKeyPrefix($apiKeyIdentifier)
     {
-        return isset($this->apiKeyPrefixes[$apiKeyIdentifier]) ? $this->apiKeyPrefixes[$apiKeyIdentifier] : null;
+        return $this->apiKeyPrefixes[$apiKeyIdentifier] ?? null;
     }
 
     public function setAccessToken($accessToken)
@@ -179,7 +179,7 @@ class Configuration
         return $this;
     }
 
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         return $this->accessToken;
     }
@@ -190,7 +190,7 @@ class Configuration
         return $this;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -201,7 +201,7 @@ class Configuration
         return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -212,7 +212,7 @@ class Configuration
         return $this;
     }
 
-    public function getHost()
+    public function getHost(): string
     {
         return $this->host;
     }
@@ -227,7 +227,7 @@ class Configuration
         return $this;
     }
 
-    public function getUserAgent()
+    public function getUserAgent(): string
     {
         return $this->userAgent;
     }
@@ -238,7 +238,7 @@ class Configuration
         return $this;
     }
 
-    public function getDebug()
+    public function getDebug(): bool
     {
         return $this->debug;
     }
@@ -249,7 +249,7 @@ class Configuration
         return $this;
     }
 
-    public function getDebugFile()
+    public function getDebugFile(): string
     {
         return $this->debugFile;
     }
@@ -260,22 +260,22 @@ class Configuration
         return $this;
     }
 
-    public function getTempFolderPath()
+    public function getTempFolderPath(): string
     {
         return $this->tempFolderPath;
     }
 
-    public function setTimeout($timeout)
+    public function setTimeout($timeout): void
     {
         $this->timeout = $timeout;
     }
 
-    public function getTimeout()
+    public function getTimeout(): int
     {
         return $this->timeout;
     }
 
-    public static function getDefaultConfiguration()
+    public static function getDefaultConfiguration(): Configuration
     {
         if (self::$defaultConfiguration === null) {
             self::$defaultConfiguration = new Configuration();
@@ -284,12 +284,12 @@ class Configuration
         return self::$defaultConfiguration;
     }
 
-    public static function setDefaultConfiguration(Configuration $config)
+    public static function setDefaultConfiguration(Configuration $config): void
     {
         self::$defaultConfiguration = $config;
     }
 
-    public static function toDebugReport()
+    public static function toDebugReport(): string
     {
         $report  = 'PHP SDK (MailchimpMarketing) Debug Report:' . PHP_EOL;
         $report .= '    OS: ' . php_uname() . PHP_EOL;
